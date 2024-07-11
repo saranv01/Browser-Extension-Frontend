@@ -1,0 +1,47 @@
+{
+    "manifest_version": 3,
+    "name": "Deepfake Detection",
+    "version": "1.0",
+    "description": "Detects deepfakes in real-time video calls",
+    "permissions": ["activeTab", "scripting", "storage", "declarativeNetRequest", "webRequest", "webRequestBlocking"],
+    "background": {
+      "service_worker": "background.js"
+    },
+    "action": {
+      "default_popup": "popup.html"
+    },
+    "content_scripts": [
+      {
+        "matches": ["https://meet.google.com/*", "https://*.zoom.us/*"],
+        "js": ["content.js"]
+      }
+    ],
+    "declarativeNetRequest": {
+      "rules": [
+        {
+          "id": "blockDeepfakes",
+          "condition": {
+            "url": {
+              "host_suffix": ".example.com"  // Replace with actual deepfake source patterns
+            }
+          },
+          "action": {
+            "type": "cancel"
+          }
+        }
+      ]
+    },
+    "webRequest": {
+      "blocking": true,
+      "resources": [
+        {
+          "url": {
+            "scheme": ["http", "https"],
+            "host_suffix": ".example.com"  // Replace with actual deepfake source patterns
+          },
+          "type": ["main_frame", "sub_frame", "object", "script", "stylesheet", "image", "media"]
+        }
+      ]
+    }
+  }
+  
