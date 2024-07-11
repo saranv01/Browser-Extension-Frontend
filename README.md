@@ -1,1 +1,1 @@
-﻿# Browser-Extension-frontend
+﻿# Browser Extension for Realtime Deepfake Detection System
